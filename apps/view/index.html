@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>todolist</title>
+</head>
+<body>
+	<div id="todolist">
+		<div id="header">
+			<span id="header_span">ToDoList</span>
+			<input id="header_ipt" type="text" name="add" placeholder="添加ToDo" v-on:keyup.enter="addList($event)" v-model="list" v-on:blur="clearwarn()" v-on:input="clearwarn()">
+			<transition name="warn">
+				<p id="header_p" v-if="warn">请填写字段!</p>
+			</transition>
+		</div>
+		<div id="main">
+			<div id="ing">
+				<h2 id="ing_h2">正在进行<span class="count" v-text="ingcount"></span></h2>
+				
+				<ul id="ing_ul">
+					<li class="ing_li" v-for="(value,key) in ingsession" v-bind:key="value">
+						<input class="ing_li_ipt"  type="checkbox" name=""  v-on:click="changelist(value,key)">
+						<p class="ing_li_p" v-text="value" v-if="showp[key]" v-on:click="focus(key)"></p>	
+						<input class="ing_li_p_ipt" v-model="changesession[key]" v-else v-focus v-on:blur="blur(key)"></input>	
+						<a class="remove_a" href="javascript:void(0)" v-on:click="removelist(key)">-</a>
+					</li>
+				</ul>
+			</div>
+			<div id="ed">
+				<h2 id="ed_h2">已经完成<span class="count" v-text="edcount"></span></h2>
+				
+				<ul id="ed_ul">
+					<li class="ed_li" v-for="(value,key) in edsession" v-bind:key="value">
+						<input class="ed_li_ipt" checked type="checkbox" name=""  v-on:click="changelist(value,key)">
+						<p class="ed_li_p" v-text="value" v-if="showp[key]" v-on:click="focus(key)"></p>
+						<input class="ing_li_p_ipt" v-model="changesession[key]" v-else v-focus v-on:blur="blur(key)"></input>
+						<a class="remove_a" href="javascript:void(0)" v-on:click="removelist(key)">-</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div id="clear" v-on:click="clearlocal()">
+			<a href="javascript:void(0)">clear all</a>
+		</div>
+	</div>
+</body>
+</html>
